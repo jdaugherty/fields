@@ -201,10 +201,16 @@ class FormFieldsTagLib {
 				}
 			}
 
-			List classes = [widgetAttrs['class'] ?: '']
-			if (model.invalid) classes << (widgetAttrs.remove('invalidClass') ?: '')
-			if (model.required) classes << (widgetAttrs.remove('requiredClass') ?: '')
-			widgetAttrs['class'] = classes.join(' ').trim()
+			List widgetClasses = [widgetAttrs['class'] ?: '']
+			String cssClass = widgetAttrs.remove('invalidClass')
+			if (cssClass && model.invalid) {
+				widgetClasses << cssClass
+			}
+			cssClass = widgetAttrs.remove('requiredClass')
+			if (cssClass && model.required) {
+				widgetClasses << cssClass
+			}
+			widgetAttrs['class'] = widgetClasses.join(' ').trim()
 			if (widgetAttrs['class'].isEmpty()) {
 				widgetAttrs.remove('class')
 			}
